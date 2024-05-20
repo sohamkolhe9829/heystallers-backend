@@ -1,0 +1,75 @@
+
+
+
+functianality
+
+1. Owner can be signed in using only email and password.
+2. Owner stall should be approved by the developer to be published to the customers.
+3. Customer side app will check first if there is any email already registered or not in the backend.
+4. Customers will have 2 types of authentication services: email/password and google OAuth.
+5. Notifications on both owner and user
+
+    Owner
+        1. Owner can see all review at one place.
+        2. Popular food category & food based on user interaction of stall
+        3. Analytics of the visits per day 
+        4. loyal customer list (based on user interaction)
+        5. Upload photos of stores & food and save to stall collection 
+        6. can edit store information
+    
+    Customer
+        1. Can search foods item || category || stall name.
+        2. Can rate or review the food stall.
+        3. Favourite stalls data in user profile 
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+
+Routes
+
+Customer Authentication:
+    /profile/signup: POST - Create a new user account.
+    /profile/login: POST - Log in to an existing account. [ Email + password ]
+    /profile/social-login: POST - Log in to account by OAuth by google
+
+Customer Profile: 
+    /profile/:userId : GET - Get profile detail of the customer
+    /profile/saved/:userId : GET - Get saved food stalls in user database
+    /profile/:userId : PUT - Can update user data
+    /profile/change-password/:userId : PUT - Change password of the user
+
+Stall data:
+    /foodstalls/search/:searchString : GET - Search Food by stall name, category, food item & location
+    /foodstalls/popular: GET - Get all food stalls according to there rating count
+    /foodstalls/nearme/:coordinates : GET - Get food stalls according to the current coordinates of the user.
+    /foodstalls/:id : GET - Get data of specific stall id.
+    /foodstalls/saved/:id : POST - Add current stall to the user saved data list
+    /foodstalls/menu/:imageURL : POST - Uploaded images of menu to the stall menu images list
+    /foodstalls/:imageURL : POST - Uploaded images of stall or food to the stall images list
+
+
+Stall Owner Authentication:
+    /foodstalls/login: POST - Login stall owner by existing email id and password
+    /foodstalls/signup: POST - Signup the stall owner with stall details
+
+
+Rating & review:
+    /foodstalls/rating: GET - get rating of the foodstall
+    /foodstalls/review: GET - get reviews of the foodstalls
+    /foodstalls/review/:stallId : POST - User can review stall
+
+Feedback: 
+    /feedback: POST - Customers or owner can submit the feedback
+    /feedback: GET - Only developer can se the feedback provided by the customers
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+Some Major functions
+
+1. Notification sender function which uses firebase FCM for sending message (review alert & stall opening under 50 KM)
+2. 
