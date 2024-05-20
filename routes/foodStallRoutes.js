@@ -126,16 +126,25 @@ router.put(':id', jwtAuthMiddleware, async (req, res) => {
 //Get all food stalls
 router.get('/', jwtAuthMiddleware, async (req, res) => {
     try {
+
         const foodStalls = await FoodStall.find();
 
-        if (!foodStalls) {
-            res.status(200).json({
-                statusCode: 200,
-                message: "Successfull"
+        const approvedStalls = [];
+        for (let i = 0; i < foodStalls.length; i++) {
+
+            if (foodStalls[i].isApproved) {
+                approvedStalls.push(foodStalls[i]);
+            }
+        }
+
+        if (!approvedStalls) {
+            res.status(404).json({
+                statusCode: 404,
+                message: "No data found!"
             });
         }
 
-        res.status(200).json(foodStalls);
+        res.status(200).json(approvedStalls);
 
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
