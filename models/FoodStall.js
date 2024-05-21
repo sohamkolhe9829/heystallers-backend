@@ -5,39 +5,34 @@ const bcrypt = require('bcrypt');
 const FoodStallSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true
     },
     password: {
         type: String,
-        required: true
     },
     name: {
         type: String,
-        required: true
+    },
+    isOpen: {
+        type: Boolean
     },
     category: {
         type: String,
-        required: true
     },
     isApproved: {
         type: Boolean,
-        required: true
     },
     foodType: {
         type: String,
         enum: ["Veg", "Non-Veg", "Veg & Non-Veg"],
-        required: true
     },
     bannerURL: {
         type: String
     },
     pincode: {
         type: String,
-        required: true
     },
     location: {
         type: String,
-        required: true
     },
     coordinates: {
         type: {
@@ -51,11 +46,9 @@ const FoodStallSchema = new mongoose.Schema({
     },
     openingHours: {
         type: String,
-        required: true
     },
     priceRange: {
         type: String,
-        required: true
     },
     phone: {
         type: String

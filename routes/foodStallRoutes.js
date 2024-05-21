@@ -34,7 +34,7 @@ router.post('/signup', async (req, res) => {
         console.log(JSON.stringify(payload));
         const token = generateToken(payload);
 
-        res.status(200).json({ response: response, token: token });
+        res.status(200).json({ statusCode: 200, response: response, token: token });
     }
     catch (err) {
         console.log(err);
@@ -66,31 +66,32 @@ router.post('/login', async (req, res) => {
         }
         const token = generateToken(payload);
 
-        // resturn token as response
-        res.status(200).json({
-            "foodStall": {
-                "email": foodStall.email,
-                "name": foodStall.name,
-                "category": foodStall.category,
-                "isApproved": foodStall.isApproved,
-                "foodType": foodStall.foodType,
-                "bannerURL": foodStall.bannerURL,
-                "pincode": foodStall.pincode,
-                "location": foodStall.location,
-                "coordinates": foodStall.coordinates,
-                "openingHours": foodStall.openingHours,
-                "priceRange": foodStall.priceRange,
-                "phone": foodStall.phone,
-                "website": foodStall.website,
+        res.status(200).json({ statusCode: 200, response: foodStall, token: token });
+        // // resturn token as response
+        // res.status(200).json({
+        //     "foodStall": {
+        //         "email": foodStall.email,
+        //         "name": foodStall.name,
+        //         "category": foodStall.category,
+        //         "isApproved": foodStall.isApproved,
+        //         "foodType": foodStall.foodType,
+        //         "bannerURL": foodStall.bannerURL,
+        //         "pincode": foodStall.pincode,
+        //         "location": foodStall.location,
+        //         "coordinates": foodStall.coordinates,
+        //         "openingHours": foodStall.openingHours,
+        //         "priceRange": foodStall.priceRange,
+        //         "phone": foodStall.phone,
+        //         "website": foodStall.website,
 
-                "rating": foodStall.rating,
-                "images": foodStall.images,
-                "menu": foodStall.menu,
-                "reviewsCount": foodStall.reviewsCount,
-                "reviews": foodStall.reviews
-            }
-            , token
-        })
+        //         "rating": foodStall.rating,
+        //         "images": foodStall.images,
+        //         "menu": foodStall.menu,
+        //         "reviewsCount": foodStall.reviewsCount,
+        //         "reviews": foodStall.reviews
+        //     }
+        //     , token
+        // })
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -112,10 +113,13 @@ router.put(':id', jwtAuthMiddleware, async (req, res) => {
         })
 
         if (!response) {
-            return res.status(404).json({ error: 'Person not found' });
+            return res.status(404).json({ error: 'FoodStall not found' });
         }
 
-        res.status(200).json(response);
+        res.status(200).json({
+            statusCode: 200,
+            message: response
+        });
 
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
