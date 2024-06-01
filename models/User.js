@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -20,6 +22,8 @@ const userSchema = new mongoose.Schema({
     savedStalls: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'FoodStall' },],
     },
+    resetToken: String,
+    resetExpires: Date,
 });
 
 userSchema.pre('save', async function (next) {
@@ -51,4 +55,11 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
         throw err;
     }
 }
+
+userSchema.methods.generateResetToken = function () {
+    const resetToken = crypto.randomBytes(20).toString('hex');
+    this.resetToken = resetToken;
+    this.resetExpires = Date.now() + 3600000; // Token expires in 1 hour
+};
+
 module.exports = mongoose.model('User', userSchema);
